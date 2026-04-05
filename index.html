@@ -883,6 +883,19 @@
                 grid-template-columns: repeat(3, 1fr);
            }
         }
+
+        .logo {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* space between image and text */
+    text-decoration: none;
+}
+
+.logo-img {
+    width: 70px;   /* adjust size as needed */
+    height: 70px;
+    object-fit: contain;
+}
     </style>
 </head>
 <body>
@@ -893,7 +906,10 @@
 
     <header>
         <div class="nav-container">
-            <a href="#hero" class="logo">Green<span> Globe </span>Guardian</a>
+            <a href="#hero" class="logo">
+                <img src="Guardian-logo.png" alt="Green Globe Guardian Logo" class="logo-img">
+                Green<span> Globe </span>Guardian
+            </a>
             <ul class="nav-links" id="nav-links">
                 <li><a href="#hero">Home</a></li>
                 <li><a href="#slider-section">Gallery</a></li>
@@ -902,6 +918,7 @@
                 <li><a href="#impact-section">Our Impact</a></li> 
                 <li><a href="#resources-section">Resources</a></li>
                 <li><a href="#fullpage-contact">Contact</a></li>
+                <li><a href="#Donate" id="nav-donate-btn">Donate</a></li>
                
             </ul>
             <div class="mobile-menu-icon" id="mobile-menu-icon">
@@ -909,7 +926,7 @@
             </div>
         </div>
     </header>
-
+<!-- DONATION MODAL -->
     <section class="hero-section" id="hero">
     <div class="hero-overlay"></div>
     <div class="hero-content animate-on-load">
