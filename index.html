@@ -7,7 +7,7 @@
     
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">  
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">    
- 
+    <script src="https://js.paystack.co/v1/inline.js"></script>
     <style> 
         /* Global Styles */  
         :root {  
@@ -896,6 +896,100 @@
     height: 70px;
     object-fit: contain;
 }
+
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(6px);
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from {opacity: 0;}
+            to {opacity: 1;}
+        }
+
+        .modal-content {
+            background: #ffffff;
+            padding: 25px 20px;
+            width: 340px;
+            border-radius: 16px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+            transform: translateY(20px);
+            animation: slideUp 0.3s ease forwards;
+        }
+
+        @keyframes slideUp {
+            to { transform: translateY(0); }
+        }
+
+        .modal-header {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .modal-header h3 {
+            margin: 0;
+            font-weight: 600;
+        }
+
+        .modal-header p {
+            font-size: 13px;
+            color: #777;
+        }
+
+        .input-group {
+            margin-top: 12px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            outline: none;
+            transition: 0.2s;
+        }
+
+        .input-group input:focus {
+            border-color: #00c853;
+            box-shadow: 0 0 0 2px rgba(0,200,83,0.1);
+        }
+
+        .pay-btn {
+            margin-top: 18px;
+            padding: 12px;
+            background: linear-gradient(135deg, #00c853, #00e676);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .pay-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+        }
+
+        .cancel-btn {
+            margin-top: 10px;
+            background: none;
+            border: none;
+            color: #999;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        .cancel-btn:hover {
+            color: #333;
+        }
+    </style>
     </style>
 </head>
 <body>
@@ -918,8 +1012,9 @@
                 <li><a href="#impact-section">Our Impact</a></li> 
                 <li><a href="#resources-section">Resources</a></li>
                 <li><a href="#fullpage-contact">Contact</a></li>
-                <li><a href="#Donate" id="nav-donate-btn">Donate</a></li>
-               
+
+                <li><a href="#" id="nav-donate-btn">Donate</a></li>
+
             </ul>
             <div class="mobile-menu-icon" id="mobile-menu-icon">
                 <i class="fas fa-bars"></i>
@@ -927,6 +1022,88 @@
         </div>
     </header>
 <!-- DONATION MODAL -->
+<!-- Donation Modal -->
+<div class="modal" id="donationModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Support Our Cause</h3>
+            <p>Your contribution makes a difference</p>
+        </div>
+
+        <div class="input-group">
+            <input type="text" id="name" placeholder="Full Name">
+        </div>
+
+        <div class="input-group">
+            <input type="email" id="email" placeholder="Email Address">
+        </div>
+
+        <div class="input-group">
+            <input type="number" id="amount" placeholder="Amount (KES)" min="1">
+        </div>
+
+        <button class="pay-btn" onclick="payWithPaystack()">Proceed to Pay</button>
+        <button class="cancel-btn" onclick="closeModal()">Cancel</button>
+    </div>
+</div>
+
+<script>
+// --- Modal Logic ---
+document.addEventListener('DOMContentLoaded', function () {
+    const donateBtn = document.getElementById('nav-donate-btn');
+    const modal = document.getElementById('donationModal');
+    const modalContent = modal.querySelector('.modal-content');
+
+    donateBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        modal.style.display = 'flex';
+    });
+
+    document.addEventListener('click', function(e) {
+        const target = e.target;
+        if (modal.style.display === 'flex' && !modalContent.contains(target) && target !== donateBtn) {
+            closeModal();
+        }
+    });
+});
+
+function closeModal() {
+    document.getElementById('donationModal').style.display = 'none';
+}
+
+// --- Paystack Payment ---
+function payWithPaystack() {
+    let name = document.getElementById('name').value.trim();
+    let email = document.getElementById('email').value.trim();
+    let amount = parseFloat(document.getElementById('amount').value) * 100; // KES to kobo
+
+    if (!name || !email || !amount || amount <= 0) {
+        alert("Please fill all fields with valid values");
+        return;
+    }
+
+    let handler = PaystackPop.setup({
+        key: 'pk_test_d7951d7e38ba53250f4b90ea3a68a5df0e5607b6', // replace with your public key
+        email: email,
+        amount: amount,
+        currency: 'KES',
+        metadata: {
+            custom_fields: [
+                { display_name: "Full Name", variable_name: "full_name", value: name }
+            ]
+        },
+        callback: function(response) {
+            alert('Payment successful! Ref: ' + response.reference);
+            closeModal();
+        },
+        onClose: function() {
+            alert('Transaction cancelled');
+        }
+    });
+
+    handler.openIframe();
+}
+</script>
     <section class="hero-section" id="hero">
     <div class="hero-overlay"></div>
     <div class="hero-content animate-on-load">
