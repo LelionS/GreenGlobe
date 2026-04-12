@@ -11,12 +11,12 @@
     <style> 
         /* Global Styles */  
         :root {  
-            --primary-color: #000;
-            --secondary-color: #fff; 
-            --accent-color: #2e7d32; 
-            --dark-grey: #111;
-            --light-grey: #ccc;
-            --text-grey: #aaa;
+            --primary-color: #f9fafb;       /* light background */
+            --secondary-color: #111827;     /* dark text */
+            --accent-color: #22c55e;        /* brighter green */
+            --dark-grey: #ffffff;           /* cards/sections */
+            --light-grey: #4b5563;
+            --text-grey: #6b7280;
             --header-height: 70px;
         }
 
@@ -112,7 +112,7 @@
             align-items: center;
             z-index: 1000;
             padding: 0 2rem;
-            background-color: rgba(0, 0, 0, 0.5);
+            background-color: rgba(255, 255, 255, 0.8);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             transition: background-color 0.3s ease;
@@ -994,7 +994,21 @@
         .cancel-btn:hover {
             color: #333;
         }
-    </style>
+
+        .gallery-video {
+            max-width: 900px;
+            margin: 0 auto 2rem;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+.gallery-video video {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 12px;
+}
     </style>
 </head>
 <body>
@@ -1167,6 +1181,12 @@ function payWithPaystack() {
                 <div class="slide"><img src="pic3.jpg" alt="Nature 3"></div>
                 <div class="slide"><img src="pic4.jpg" alt="Nature 4"></div>
             </div>
+        </div>
+        <div class="gallery-video animate-on-scroll">
+            <video controls poster="thumbnail.jpg">
+                <source src="your-video.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
         </div>
     </section>
 <section class="features-section" id="features-section">
