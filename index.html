@@ -995,19 +995,28 @@
             color: #333;
         }
 
-        .gallery-video {
-            max-width: 900px;
-            margin: 0 auto 2rem;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-        }
+        /* VIDEO */
+.gallery-video {
+    max-width: 1000px;
+    margin: 0 auto 3rem;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+}
 
 .gallery-video video {
     width: 100%;
-    height: auto;
+    height: 500px;
+    object-fit: cover;
     display: block;
-    border-radius: 12px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .gallery-video video {
+        height: 250px;
+    }
+}
 }
     </style>
 </head>
@@ -1162,33 +1171,38 @@ function payWithPaystack() {
 </script>
 
     <section class="slider-section" id="slider-section">
-        <h2 class="section-title animate-on-scroll">Green Globe Archive</h2>
-        <div class="slider-container animate-on-scroll">
-            <div class="slider-wrapper">
-                <div class="slide"><img src="pic1.jpeg" alt="Nature 1"></div>
-                <div class="slide"><img src="pic2.jpg" alt="Nature 2"></div>
-                <div class="slide"><img src="pic3.jpg" alt="Nature 3"></div>
-                <div class="slide"><img src="pic4.jpg" alt="Nature 4"></div>
-                <div class="slide"><img src="pic5.jpg" alt="Nature 5"></div>        
-                <div class="slide"><img src="pic6.jpg" alt="Nature 6"></div>
-                <div class="slide"><img src="pic1.jpeg" alt="Nature 1"></div>
-                <div class="slide"><img src="pic2.jpg" alt="Nature 2"></div>
-                <div class="slide"><img src="pic3.jpg" alt="Nature 3"></div>
-                <div class="slide"><img src="pic4.jpg" alt="Nature 4"></div>
-                <div class="slide"><img src="pic5.jpg" alt="Nature 5"></div>     
-                <div class="slide"><img src="pic6.jpg" alt="Nature 6"></div>
-                <div class="slide"><img src="pic2.jpg" alt="Nature 2"></div>
-                <div class="slide"><img src="pic3.jpg" alt="Nature 3"></div>
-                <div class="slide"><img src="pic4.jpg" alt="Nature 4"></div>
-            </div>
+    
+    <h2 class="section-title animate-on-scroll">Green Globe Archive</h2>
+
+    <!-- VIDEO FIRST -->
+    <div class="gallery-video animate-on-scroll">
+        <video autoplay muted loop playsinline poster="thumbnail.jpg">
+            <source src="vid01.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    <!-- SLIDER -->
+    <div class="slider-container animate-on-scroll">
+        <div class="slider-wrapper">
+            <div class="slide"><img src="pic1.jpeg" alt="Nature 1"></div>
+            <div class="slide"><img src="pic2.jpg" alt="Nature 2"></div>
+            <div class="slide"><img src="pic3.jpg" alt="Nature 3"></div>
+            <div class="slide"><img src="pic4.jpg" alt="Nature 4"></div>
+            <div class="slide"><img src="pic5.jpg" alt="Nature 5"></div>        
+            <div class="slide"><img src="pic6.jpg" alt="Nature 6"></div>
+
+            <!-- duplicate for smooth loop -->
+            <div class="slide"><img src="pic1.jpeg" alt="Nature 1"></div>
+            <div class="slide"><img src="pic2.jpg" alt="Nature 2"></div>
+            <div class="slide"><img src="pic3.jpg" alt="Nature 3"></div>
+            <div class="slide"><img src="pic4.jpg" alt="Nature 4"></div>
+            <div class="slide"><img src="pic5.jpg" alt="Nature 5"></div>     
+            <div class="slide"><img src="pic6.jpg" alt="Nature 6"></div>
         </div>
-        <div class="gallery-video animate-on-scroll">
-            <video controls poster="thumbnail.jpg">
-                <source src="vid01.mp4" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-        </div>
-    </section>
+    </div>
+
+</section>
 <section class="features-section" id="features-section">
     <h2 class="section-title">About Green Globe Guardian & What We Do</h2>
 
