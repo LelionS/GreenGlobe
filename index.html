@@ -1061,36 +1061,30 @@
             }
             }
         .donate-btn {
-              display: inline-flex;
-              align-items: center;
-              gap: 8px;
-              padding: 10px 22px;
-              border-radius: 999px; /* pill shape */
-              border: 3px solid #e11d48; /* red border */
-              background: #fff;
-              color: #000;
-              font-weight: 700;
-              letter-spacing: 1px;
-              text-decoration: none;
-              transition: all 0.3s ease;
-            }
-            
-            /* Heart styling */
-            .donate-btn .heart {
-              color: #e11d48;
-              font-size: 16px;
-            }
-            
-            /* Hover effect (makes it pop) */
-            .donate-btn:hover {
-              background: #e11d48;
-              color: #fff;
-              box-shadow: 0 6px 15px rgba(225, 29, 72, 0.4);
-            }
-            
-            .donate-btn:hover .heart {
-              color: #fff;
-            }
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 26px;
+  
+  border: 3px solid #e11d48; /* red oval outline */
+  border-radius: 999px;      /* makes it oval */
+  
+  background: transparent;   /* no fill */
+  color: #000;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-decoration: none;
+}
+
+/* heart color */
+.donate-btn .heart {
+  color: #e11d48;
+}
+
+/* optional subtle hover (keeps outline always) */
+.donate-btn:hover {
+  background: rgba(225, 29, 72, 0.05);
+}
     </style>
 </head>
 <body>
