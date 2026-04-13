@@ -1074,26 +1074,26 @@
                 }
             }
             }
-       .donate-btn {
-          display: inline-block;
-          padding: 10px 24px;
-          border: 4px solid red;   /* visible red outline */
-          border-radius: 999px;    /* oval shape */
-          background: white;
-          color: black;
-          font-weight: bold;
-          text-decoration: none;
-        }
-
-/* heart color */
-.donate-btn .heart {
-  color: #e11d48;
-}
-
-/* optional subtle hover (keeps outline always) */
-.donate-btn:hover {
-  background: rgba(225, 29, 72, 0.05);
-}
+           .donate-btn {
+              display: inline-block;
+              padding: 10px 24px;
+              border: 4px solid red;   /* visible red outline */
+              border-radius: 999px;    /* oval shape */
+              background: white;
+              color: black;
+              font-weight: bold;
+              text-decoration: none;
+            }
+    
+            /* heart color */
+            .donate-btn .heart {
+              color: #e11d48;
+            }
+    
+            /* optional subtle hover (keeps outline always) */
+            .donate-btn:hover {
+              background: rgba(225, 29, 72, 0.05);
+            }
     </style>
 </head>
 <body>
@@ -1118,7 +1118,7 @@
                 <li><a href="#fullpage-contact">Contact</a></li>
 
                 <li>
-                  <a href="#" class="donate-btn">DONATE ❤</a>
+                  <a href="#" id="nav-donate-btn" class="donate-btn">DONATE ❤</a>
                 </li>
 
             </ul>
@@ -1926,6 +1926,7 @@ function payWithPaystack() {
                         <li><a href="#impact-section">Our Impact</a></li> 
                         <li><a href="#resources-section">Resources</a></li>
                         <li><a href="#fullpage-contact">Contact</a></li>
+                        <li><a href="#" id="nav-donate-btn" class="donate-btn">DONATE ❤</a></li>
                     </ul>
                 </div>
             </div>
