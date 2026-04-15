@@ -1095,6 +1095,7 @@
               background: rgba(225, 29, 72, 0.05);
             }
 
+
         #blog-section {
         padding: 40px 20px;
         max-width: 1200px;
@@ -1155,6 +1156,7 @@
         color: #007bff;
         font-weight: 500;
     }
+        
     </style>
 </head>
 <body>
@@ -1926,12 +1928,30 @@ function payWithPaystack() {
 }
 </style>
     
-<section class="blog-section" id="blog-section">
-    <h2>Latest Blogs & News</h2>
+<section id="create-blog">
+    <h2>Create Blog Post</h2>
 
-    <div id="blog-container" class="blog-grid">
-        <!-- JS will inject content here -->
-    </div>
+    <form id="blogForm">
+        <input type="text" name="ID" placeholder="ID (e.g. blog-001)" required />
+        <input type="text" name="Title" placeholder="Title" required />
+
+        <textarea name="Content" placeholder="Content" required></textarea>
+
+        <input type="date" name="Date" required />
+        <input type="text" name="Name" placeholder="Author Name" required />
+        <input type="email" name="Email" placeholder="Email" />
+
+        <select name="Status">
+            <option value="published">Published</option>
+            <option value="draft">Draft</option>
+        </select>
+
+        <input type="text" name="Image" placeholder="Image URL" />
+
+        <button type="submit">Post Blog</button>
+    </form>
+
+    <p id="msg"></p>
 </section>
 
     
@@ -2236,49 +2256,46 @@ document.addEventListener('DOMContentLoaded', () => {
 
 const API_URL = "https://sheetdb.io/api/v1/elufdc7107qdy";
 
-async function loadBlogs() {
+document.getElementById("blogForm").addEventListener("submit", async function(e) {
+    e.preventDefault();
+
+    const formData = new FormData(this);
+
+    const data = {
+        data: [{
+            ID: formData.get("ID"),
+            Title: formData.get("Title"),
+            Content: formData.get("Content"),
+            Date: formData.get("Date"),
+            Name: formData.get("Name"),
+            Email: formData.get("Email"),
+            Status: formData.get("Status"),
+            Image: formData.get("Image")
+        }]
+    };
+
     try {
-        const res = await fetch(API_URL);
-        const data = await res.json();
-
-        const container = document.getElementById("blog-container");
-
-        // Filter published only + sort by newest first
-        const posts = data
-            .filter(post => post.Status && post.Status.toLowerCase() === "published")
-            .sort((a, b) => new Date(b.Date) - new Date(a.Date));
-
-        let html = "";
-
-        posts.forEach(post => {
-            html += `
-                <div class="blog-card">
-                    <img src="${post.Image || 'https://via.placeholder.com/400x200'}" alt="${post.Title}">
-                    
-                    <div class="blog-content">
-                        <h3>${post.Title}</h3>
-                        <p>${post.Content ? post.Content.substring(0, 120) + "..." : ""}</p>
-
-                        <div class="blog-meta">
-                            By ${post.Name || "Admin"} • ${post.Date || ""}
-                        </div>
-
-                        <a class="read-more" href="post.html?id=${post.ID}">
-                            Read More
-                        </a>
-                    </div>
-                </div>
-            `;
+        const res = await fetch(API_URL, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
         });
 
-        container.innerHTML = html;
+        const result = await res.json();
 
-    } catch (error) {
-        console.error("Error loading blogs:", error);
+        document.getElementById("msg").innerText =
+            "Blog posted successfully!";
+
+        this.reset();
+
+    } catch (err) {
+        console.error(err);
+        document.getElementById("msg").innerText =
+            "Error posting blog.";
     }
-}
-
-loadBlogs();
+});
 </script>
 </body>
 
