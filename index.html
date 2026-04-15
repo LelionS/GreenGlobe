@@ -1096,66 +1096,120 @@
             }
 
 
-        #blog-section {
-        padding: 40px 20px;
-        max-width: 1200px;
-        margin: auto;
-    }
+        #blog-app{
+    max-width:1200px;
+    margin:auto;
+    padding:40px 20px;
+    font-family: Arial, sans-serif;
+}
 
-    #blog-section h2 {
-        text-align: center;
-        margin-bottom: 30px;
-        font-size: 28px;
-    }
+/* HEADER */
+.blog-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
 
-    .blog-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-        gap: 20px;
-    }
+.blog-header h2{
+    font-size:28px;
+}
 
-    .blog-card {
-        background: #fff;
-        border-radius: 12px;
-        overflow: hidden;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        display: flex;
-        flex-direction: column;
-    }
+.blog-header button{
+    padding:10px 15px;
+    border:none;
+    background:#111;
+    color:#fff;
+    border-radius:8px;
+    cursor:pointer;
+}
 
-    .blog-card img {
-        width: 100%;
-        height: 160px;
-        object-fit: cover;
-    }
+/* GRID */
+.blog-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    gap:20px;
+}
 
-    .blog-content {
-        padding: 15px;
-    }
+/* CARD */
+.blog-card{
+    background:#fff;
+    border-radius:12px;
+    overflow:hidden;
+    box-shadow:0 4px 15px rgba(0,0,0,0.08);
+}
 
-    .blog-content h3 {
-        margin: 0 0 10px;
-        font-size: 18px;
-    }
+.blog-card img{
+    width:100%;
+    height:160px;
+    object-fit:cover;
+}
 
-    .blog-content p {
-        font-size: 14px;
-        color: #555;
-        margin-bottom: 10px;
-    }
+.blog-content{
+    padding:15px;
+}
 
-    .blog-meta {
-        font-size: 12px;
-        color: #888;
-    }
+.blog-content h3{
+    margin:0 0 8px;
+}
 
-    .read-more {
-        display: inline-block;
-        margin-top: 10px;
-        text-decoration: none;
-        color: #007bff;
-        font-weight: 500;
-    }
+.blog-content p{
+    font-size:14px;
+    color:#555;
+}
+
+/* MODAL */
+.modal{
+    display:none;
+    position:fixed;
+    top:0; left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.6);
+    justify-content:center;
+    align-items:center;
+}
+
+.modal-content{
+    background:#fff;
+    padding:20px;
+    width:90%;
+    max-width:500px;
+    border-radius:12px;
+    position:relative;
+}
+
+.close{
+    position:absolute;
+    right:15px;
+    top:10px;
+    font-size:24px;
+    cursor:pointer;
+}
+
+/* FORM */
+#blogForm{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+
+#blogForm input,
+#blogForm textarea,
+#blogForm select{
+    padding:10px;
+    border:1px solid #ddd;
+    border-radius:8px;
+}
+
+#blogForm button{
+    padding:10px;
+    border:none;
+    background:#111;
+    color:#fff;
+    border-radius:8px;
+    cursor:pointer;
+}
         
     </style>
 </head>
@@ -1178,7 +1232,7 @@
                 <!-- <li><a href="#models-section">Our Impact</a></li> -->
                 <li><a href="#impact-section">Our Impact</a></li> 
                 <li><a href="#resources-section">Resources</a></li>
-                <li><a href="#blog-section">Blogs</a></li>
+                <li><a href="#blog-app">Blogs</a></li>
                 <li><a href="#fullpage-contact">Contact</a></li>
 
                 <li>
@@ -1928,30 +1982,42 @@ function payWithPaystack() {
 }
 </style>
     
-<section id="create-blog">
-    <h2>Create Blog Post</h2>
+<section class="blog-app" id="blog-app">
 
-    <form id="blogForm">
-        <input type="text" name="ID" placeholder="ID (e.g. blog-001)" required />
-        <input type="text" name="Title" placeholder="Title" required />
+    <div class="blog-header">
+        <h2>Blogs & News</h2>
+        <button id="openModalBtn">+ Add Blog</button>
+    </div>
 
-        <textarea name="Content" placeholder="Content" required></textarea>
+    <div id="blog-container" class="blog-grid"></div>
 
-        <input type="date" name="Date" required />
-        <input type="text" name="Name" placeholder="Author Name" required />
-        <input type="email" name="Email" placeholder="Email" />
+    <!-- MODAL -->
+    <div id="blogModal" class="modal">
+        <div class="modal-content">
+            <span id="closeModalBtn" class="close">&times;</span>
 
-        <select name="Status">
-            <option value="published">Published</option>
-            <option value="draft">Draft</option>
-        </select>
+            <h3>Create Blog Post</h3>
 
-        <input type="text" name="Image" placeholder="Image URL" />
+            <form id="blogForm">
+                <input type="text" name="Title" placeholder="Title" required />
+                <textarea name="Content" placeholder="Content" required></textarea>
 
-        <button type="submit">Post Blog</button>
-    </form>
+                <input type="date" name="Date" required />
+                <input type="text" name="Name" placeholder="Author" required />
+                <input type="text" name="Image" placeholder="Image URL" />
 
-    <p id="msg"></p>
+                <select name="Status">
+                    <option value="published">Published</option>
+                    <option value="draft">Draft</option>
+                </select>
+
+                <button type="submit">Publish</button>
+            </form>
+
+            <p id="msg"></p>
+        </div>
+    </div>
+
 </section>
 
     
@@ -2256,46 +2322,67 @@ document.addEventListener('DOMContentLoaded', () => {
 
 const API_URL = "https://sheetdb.io/api/v1/elufdc7107qdy";
 
-document.getElementById("blogForm").addEventListener("submit", async function(e) {
+/* MODAL LOGIC */
+const modal = document.getElementById("blogModal");
+document.getElementById("openModalBtn").onclick = () => modal.style.display = "flex";
+document.getElementById("closeModalBtn").onclick = () => modal.style.display = "none";
+window.onclick = (e) => { if(e.target == modal) modal.style.display = "none"; };
+
+/* LOAD BLOGS */
+async function loadBlogs(){
+    const res = await fetch(API_URL);
+    const data = await res.json();
+
+    const container = document.getElementById("blog-container");
+
+    const posts = data
+        .filter(p => p.Status?.toLowerCase() === "published")
+        .sort((a,b)=> new Date(b.Date) - new Date(a.Date));
+
+    container.innerHTML = posts.map(post => `
+        <div class="blog-card">
+            <img src="${post.Image || 'https://via.placeholder.com/400x200'}" />
+            <div class="blog-content">
+                <h3>${post.Title}</h3>
+                <p>${(post.Content || '').slice(0,120)}...</p>
+            </div>
+        </div>
+    `).join("");
+}
+
+/* POST BLOG */
+document.getElementById("blogForm").addEventListener("submit", async (e)=>{
     e.preventDefault();
 
-    const formData = new FormData(this);
+    const form = new FormData(e.target);
 
-    const data = {
+    const payload = {
         data: [{
-            ID: formData.get("ID"),
-            Title: formData.get("Title"),
-            Content: formData.get("Content"),
-            Date: formData.get("Date"),
-            Name: formData.get("Name"),
-            Email: formData.get("Email"),
-            Status: formData.get("Status"),
-            Image: formData.get("Image")
+            ID: "blog-" + Date.now(),
+            Title: form.get("Title"),
+            Content: form.get("Content"),
+            Date: form.get("Date"),
+            Name: form.get("Name"),
+            Image: form.get("Image"),
+            Status: form.get("Status")
         }]
     };
 
-    try {
-        const res = await fetch(API_URL, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(data)
-        });
+    await fetch(API_URL, {
+        method:"POST",
+        headers:{ "Content-Type":"application/json" },
+        body: JSON.stringify(payload)
+    });
 
-        const result = await res.json();
+    document.getElementById("msg").innerText = "Posted successfully";
 
-        document.getElementById("msg").innerText =
-            "Blog posted successfully!";
+    e.target.reset();
+    modal.style.display = "none";
 
-        this.reset();
-
-    } catch (err) {
-        console.error(err);
-        document.getElementById("msg").innerText =
-            "Error posting blog.";
-    }
+    loadBlogs();
 });
+
+loadBlogs();
 </script>
 </body>
 
