@@ -1,0 +1,2 @@
+/webmail    https://rbx107.truehost.cloud:2096/    301!
+/webmail/*  https://rbx107.truehost.cloud:2096/:splat 301!
