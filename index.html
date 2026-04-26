@@ -1747,6 +1747,30 @@
     font-size: 0.9em;
     color: #bbb;
 }
+    /* Blinking CURRENT badge */
+.blink-badge {
+    margin-left: 10px;
+    padding: 4px 10px;
+    font-size: 0.7em;
+    background: red;
+    color: #fff;
+    border-radius: 20px;
+    font-weight: bold;
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0%, 50%, 100% { opacity: 1; }
+    25%, 75% { opacity: 0.3; }
+}
+
+/* Sponsor highlight */
+.sponsor-call {
+    color: #00ff9c;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
 </style>
 <section class="projects-section" id="projects-section">
     <h2 class="section-title">Our Projects</h2>
@@ -1761,14 +1785,18 @@
                 </video>
             </div>
             <div class="project-content">
-                <h3>Clean Cooking Initiative (Current Project)</h3>
+                <h3>
+                    Clean Cooking Initiative 
+                    <span class="blink-badge">CURRENT</span>
+                </h3>
+            
                 <p>
-                Clean cooking is an initiative by Green Globe Guardian aimed at mitigating climate change by reducing reliance on firewood and charcoal, which contribute to deforestation. This stove uses biodiesel and pyrolysis diesel from tree seeds and waste plastic, providing a cleaner alternative that reduces environmental pollution.
+                    A clean cooking solution using biodiesel and pyrolysis diesel to reduce deforestation and environmental pollution, delivering LPG-like performance.
                 </p>
+            
                 <p>
-                Our prototype has been successfully tested and proven to cook efficiently and cleanly, comparable to LPG.
+                    <strong class="sponsor-call">Sponsor this initiative</strong>
                 </p>
-                <p><strong>We are currently seeking partners and sponsors to scale this solution and bring clean cooking to more communities.</strong></p>
             </div>
         </div>
 
