@@ -1790,6 +1790,25 @@
     font-weight: 700;
     text-transform: uppercase;
 }
+    .sponsor-card {
+    cursor: pointer;
+    position: relative;
+}
+
+.sponsor-card::after {
+    content: "Sponsor Project →";
+    position: absolute;
+    bottom: 10px;
+    right: 15px;
+    font-size: 0.75em;
+    color: #00ff9c;
+    opacity: 0;
+    transition: 0.3s;
+}
+
+.sponsor-card:hover::after {
+    opacity: 1;
+}
 </style>
 <section class="projects-section" id="projects-section">
     <h2 class="section-title">Our Projects</h2>
@@ -1803,23 +1822,29 @@
                     <source src="vid_01.mp4" type="video/mp4">
                 </video>
             </div>
-            <div class="project-content">
-            <h3 class="project-title">
-                Clean Cooking Initiative 
-                <span class="status">
-                    <span class="dot"></span>
-                    <span class="label">CURRENT</span>
-                </span>
-            </h3>
-        
-            <p>
-                A clean cooking solution using biodiesel and pyrolysis diesel to reduce deforestation and environmental pollution, delivering LPG-like performance.
-            </p>
-        
-            <p>
-                <strong class="sponsor-call">Sponsor this initiative</strong>
-            </p>
-        </div>
+<div class="project-card sponsor-card" onclick="window.location.href='https://paystack.shop/pay/greenglobeguardian'">
+    <div class="media-wrapper">
+        <video autoplay muted loop playsinline>
+            <source src="clean-cooking-video.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <div class="project-content">
+        <h3 class="project-title">
+            Clean Cooking Initiative 
+            <span class="status">
+                <span class="dot"></span>
+                <span class="label">CURRENT</span>
+            </span>
+        </h3>
+
+        <p>
+            A clean cooking solution using biodiesel and pyrolysis diesel to reduce deforestation and pollution.
+        </p>
+
+        <p class="sponsor-call">Click to sponsor this project</p>
+    </div>
+</div>
         </div>
 
         <div class="project-card">
