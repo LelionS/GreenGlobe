@@ -1748,20 +1748,40 @@
     color: #bbb;
 }
     /* Blinking CURRENT badge */
-.blink-badge {
-    margin-left: 10px;
-    padding: 4px 10px;
-    font-size: 0.7em;
-    background: red;
-    color: #fff;
-    border-radius: 20px;
-    font-weight: bold;
-    animation: blink 1s infinite;
+/* Align title + status */
+.project-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-@keyframes blink {
+/* Right side status */
+.status {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* Blinking dot only */
+.dot {
+    width: 8px;
+    height: 8px;
+    background: red;
+    border-radius: 50%;
+    animation: blinkDot 1s infinite;
+}
+
+/* Static text */
+.label {
+    font-size: 0.7em;
+    color: red;
+    font-weight: bold;
+}
+
+/* Blink animation */
+@keyframes blinkDot {
     0%, 50%, 100% { opacity: 1; }
-    25%, 75% { opacity: 0.3; }
+    25%, 75% { opacity: 0.2; }
 }
 
 /* Sponsor highlight */
@@ -1769,7 +1789,6 @@
     color: #00ff9c;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
 }
 </style>
 <section class="projects-section" id="projects-section">
@@ -1785,19 +1804,22 @@
                 </video>
             </div>
             <div class="project-content">
-                <h3>
-                    Clean Cooking Initiative 
-                    <span class="blink-badge">CURRENT</span>
-                </h3>
-            
-                <p>
-                    A clean cooking solution using biodiesel and pyrolysis diesel to reduce deforestation and environmental pollution, delivering LPG-like performance.
-                </p>
-            
-                <p>
-                    <strong class="sponsor-call">Sponsor this initiative</strong>
-                </p>
-            </div>
+            <h3 class="project-title">
+                Clean Cooking Initiative 
+                <span class="status">
+                    <span class="dot"></span>
+                    <span class="label">CURRENT</span>
+                </span>
+            </h3>
+        
+            <p>
+                A clean cooking solution using biodiesel and pyrolysis diesel to reduce deforestation and environmental pollution, delivering LPG-like performance.
+            </p>
+        
+            <p>
+                <strong class="sponsor-call">Sponsor this initiative</strong>
+            </p>
+        </div>
         </div>
 
         <div class="project-card">
