@@ -7,7 +7,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://js.paystack.co/v1/inline.js"></script>
-    <link rel="stylesheet" href="styles.css">
     <style>
 /* ========================================
    GREEN GLOBE GUARDIAN - ENVIRONMENT THEME
@@ -128,9 +127,9 @@ body {
     transition: opacity 0.6s ease, visibility 0.6s ease;
 }
 .logo-img {
-	width: 70px;   /* adjust size as needed */
-	height: 70px;
-	object-fit: contain;
+    width: 70px;
+    height: 70px;
+    object-fit: contain;
 }
 
 #preloader.hidden {
@@ -221,7 +220,6 @@ header.scrolled {
 .logo-icon {
     width: 45px;
     height: 45px;
-    /* background: linear-gradient(135deg, var(--primary-green) 0%, var(--accent-emerald) 100%); */
     border-radius: 50%;
     display: flex;
     justify-content: center;
@@ -234,7 +232,7 @@ header.scrolled {
 .logo:hover .logo-icon {
     transform: rotate(360deg);
 }
-		
+        
 .nav-links {
     display: flex;
     list-style: none;
@@ -1340,7 +1338,7 @@ header.scrolled {
 }
 
 /* ========================================
-   BLOG SECTION
+   BLOG SECTION - UPDATED VIEW
 ======================================== */
 .blog-section {
     padding: 6rem 0;
@@ -1378,64 +1376,152 @@ header.scrolled {
 
 .blog-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
     gap: 2rem;
 }
 
 .blog-card {
     background: var(--white);
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-lg);
     overflow: hidden;
     box-shadow: var(--shadow-md);
     transition: var(--transition-slow);
     border: 1px solid var(--medium-gray);
     animation: fadeInUp 0.6s ease both;
+    display: flex;
+    flex-direction: column;
 }
 
 .blog-card:hover {
     transform: translateY(-8px);
     box-shadow: var(--shadow-xl);
+    border-color: var(--primary-green-light);
 }
 
-.blog-card img {
+.blog-card-image {
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+}
+
+.blog-card-image img {
     width: 100%;
-    height: 180px;
+    height: 100%;
     object-fit: cover;
     transition: var(--transition-slow);
 }
 
-.blog-card:hover img {
-    transform: scale(1.05);
+.blog-card:hover .blog-card-image img {
+    transform: scale(1.08);
+}
+
+.blog-card-date {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background: var(--primary-green);
+    color: var(--white);
+    padding: 8px 14px;
+    border-radius: var(--radius-sm);
+    font-size: 0.8rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
 }
 
 .blog-content {
     padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
 }
 
 .blog-content h3 {
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     color: var(--text-dark);
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.8rem;
     line-height: 1.4;
+    transition: var(--transition-fast);
+}
+
+.blog-card:hover .blog-content h3 {
+    color: var(--primary-green);
 }
 
 .blog-content p {
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     color: var(--text-light);
-    line-height: 1.6;
+    line-height: 1.7;
+    margin-bottom: 1rem;
+    flex-grow: 1;
 }
 
-/* Modal */
+.blog-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-top: 1rem;
+    border-top: 1px solid var(--medium-gray);
+    margin-bottom: 1rem;
+}
+
+.blog-author {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    color: var(--text-medium);
+}
+
+.blog-author i {
+    color: var(--primary-green);
+}
+
+.read-more-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 20px;
+    background: linear-gradient(135deg, var(--primary-green) 0%, var(--accent-emerald) 100%);
+    color: var(--white);
+    border: none;
+    border-radius: var(--radius-md);
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition-medium);
+    width: 100%;
+}
+
+.read-more-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-green);
+}
+
+.read-more-btn i {
+    transition: var(--transition-fast);
+}
+
+.read-more-btn:hover i {
+    transform: translateX(5px);
+}
+
+/* ========================================
+   MODALS
+======================================== */
 .modal {
     display: none;
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(5px);
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
     justify-content: center;
     align-items: center;
     z-index: 2000;
     animation: fadeIn 0.3s ease;
+    padding: 2rem;
 }
 
 @keyframes fadeIn {
@@ -1583,6 +1669,93 @@ header.scrolled {
     color: var(--primary-green);
 }
 
+/* Read More Modal - Full Blog View */
+.read-modal-content {
+    background: var(--white);
+    width: 95%;
+    max-width: 800px;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-xl);
+    animation: slideUp 0.4s ease;
+    max-height: 90vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.read-modal-image {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+}
+
+.read-modal-body {
+    padding: 2rem;
+    overflow-y: auto;
+    flex-grow: 1;
+}
+
+.read-modal-title {
+    font-size: 1.8rem;
+    color: var(--text-dark);
+    margin-bottom: 1rem;
+    line-height: 1.3;
+}
+
+.read-modal-meta {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--medium-gray);
+    flex-wrap: wrap;
+}
+
+.read-modal-meta span {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+    color: var(--text-medium);
+}
+
+.read-modal-meta span i {
+    color: var(--primary-green);
+}
+
+.read-modal-text {
+    font-size: 1rem;
+    color: var(--text-medium);
+    line-height: 1.8;
+    white-space: pre-wrap;
+}
+
+.read-modal-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 50%;
+    font-size: 1.5rem;
+    color: var(--text-dark);
+    cursor: pointer;
+    transition: var(--transition-fast);
+    border: none;
+    box-shadow: var(--shadow-md);
+    z-index: 10;
+}
+
+.read-modal-close:hover {
+    background: var(--white);
+    transform: scale(1.1);
+}
+
 /* ========================================
    CONTACT SECTION
 ======================================== */
@@ -1706,14 +1879,10 @@ footer {
     margin-bottom: 1rem;
 }
 
-.footer-logo .logo-icon {
-    /* background: var(--primary-green); */
-}
-
- .footer_logo-img {
-	width: 140px;   /* adjust size as needed */
-	height: 140px;
-	object-fit: contain;
+.footer_logo-img {
+    width: 140px;
+    height: 140px;
+    object-fit: contain;
 }
 
 .footer-logo span {
@@ -1980,6 +2149,22 @@ footer {
     .form-row {
         grid-template-columns: 1fr;
     }
+
+    .blog-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .read-modal-content {
+        max-height: 95vh;
+    }
+
+    .read-modal-image {
+        height: 200px;
+    }
+
+    .read-modal-title {
+        font-size: 1.4rem;
+    }
 }
 
 @media (max-width: 480px) {
@@ -2005,7 +2190,6 @@ footer {
         height: 45px;
     }
 }
-
     </style>
 </head>
 <body>
@@ -2306,8 +2490,8 @@ footer {
                     </div>
                     <div class="project-media">
                        <video autoplay muted loop playsinline>
-			            <source src="vid_01.mp4" type="video/mp4">
-			        </video>
+                        <source src="vid_01.mp4" type="video/mp4">
+                    </video>
                     </div>
                     <div class="project-content">
                         <h3>Clean Cooking Initiative</h3>
@@ -2394,7 +2578,7 @@ footer {
 
             <div id="blog-container" class="blog-grid"></div>
 
-            <!-- Blog Modal -->
+            <!-- Blog Create Modal -->
             <div id="blogModal" class="modal">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -2440,6 +2624,23 @@ footer {
                     <p id="msg" class="form-message"></p>
                 </div>
             </div>
+
+            <!-- Read More Modal -->
+            <div id="readModal" class="modal">
+                <div class="read-modal-content">
+                    <button id="closeReadModal" class="read-modal-close">&times;</button>
+                    <img id="readImage" class="read-modal-image" src="" alt="Blog Image">
+                    <div class="read-modal-body">
+                        <h2 id="readTitle" class="read-modal-title"></h2>
+                        <div class="read-modal-meta">
+                            <span><i class="fas fa-calendar-alt"></i> <span id="readDate"></span></span>
+                            <span><i class="fas fa-user"></i> <span id="readAuthor"></span></span>
+                        </div>
+                        <p id="readContent" class="read-modal-text"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 
     <!-- Contact Section -->
@@ -2490,8 +2691,8 @@ footer {
                     <div class="footer-about">
                         <a href="#hero" class="footer-logo">
                             <div class="logo-icon">
-								<img src="Guardian-logo.png" alt="Green Globe Guardian Logo" class="footer_logo-img">
-							</div>
+                                <img src="Guardian-logo.png" alt="Green Globe Guardian Logo" class="footer_logo-img">
+                            </div>
                             <span>Green Globe Guardian</span>
                         </a>
                         <p>Committed to protecting nature, preserving ecosystems, and building a sustainable future for generations to come.</p>
@@ -2524,7 +2725,6 @@ footer {
             </footer>
         </div>
     </section>
-</div>
 
     <!-- Scroll to Top Button -->
     <button id="scroll-to-top" aria-label="Scroll to top">
@@ -2532,7 +2732,7 @@ footer {
     </button>
 
     <script>
-	/* ========================================
+/* ========================================
    GREEN GLOBE GUARDIAN - JAVASCRIPT
 ======================================== */
 
@@ -2771,12 +2971,17 @@ document.addEventListener('DOMContentLoaded', () => {
     // ========================================
     const API_URL = 'https://sheetdb.io/api/v1/elufdc7107qdy';
     const modal = document.getElementById('blogModal');
+    const readModal = document.getElementById('readModal');
     const openModalBtn = document.getElementById('openModalBtn');
     const closeModalBtn = document.getElementById('closeModalBtn');
+    const closeReadModalBtn = document.getElementById('closeReadModal');
     const blogForm = document.getElementById('blogForm');
     const blogContainer = document.getElementById('blog-container');
 
-    // Open modal
+    // Store blogs globally for read more functionality
+    let BLOGS = [];
+
+    // Open create modal
     if (openModalBtn) {
         openModalBtn.addEventListener('click', () => {
             modal.style.display = 'flex';
@@ -2784,10 +2989,18 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Close modal
+    // Close create modal
     if (closeModalBtn) {
         closeModalBtn.addEventListener('click', () => {
             modal.style.display = 'none';
+            document.body.style.overflow = '';
+        });
+    }
+
+    // Close read modal
+    if (closeReadModalBtn) {
+        closeReadModalBtn.addEventListener('click', () => {
+            readModal.style.display = 'none';
             document.body.style.overflow = '';
         });
     }
@@ -2798,170 +3011,231 @@ document.addEventListener('DOMContentLoaded', () => {
             modal.style.display = 'none';
             document.body.style.overflow = '';
         }
-    });
-
-    // Close modal on escape key
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && modal.style.display === 'flex') {
-            modal.style.display = 'none';
+        if (e.target === readModal) {
+            readModal.style.display = 'none';
             document.body.style.overflow = '';
         }
     });
 
-    // Load blogs from API
+    // Close modal on escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            if (modal.style.display === 'flex') {
+                modal.style.display = 'none';
+                document.body.style.overflow = '';
+            }
+            if (readModal.style.display === 'flex') {
+                readModal.style.display = 'none';
+                document.body.style.overflow = '';
+            }
+        }
+    });
 
-		async function loadBlogs() {
-		    try {
-		        const res = await fetch(API_URL);
-		        const data = await res.json();
-		
-		        if (!Array.isArray(data)) throw new Error("Invalid API response");
-		
-		        const posts = data
-		            .map(p => ({
-		                ID: p.ID || p.id,
-		                Title: p.Title || p.title || "Untitled",
-		                Content: p.Content || p.content || "",
-		                Date: p.Date || p.date || "",
-		                Name: p.Name || p.name || "Anonymous",
-		                Image: p.Image || p.image || "",
-		                Status: (p.Status || p.status || "").toLowerCase()
-		            }))
-		            .filter(p => p.Status === 'published')
-		            .sort((a, b) => {
-		                const d1 = new Date(b.Date).getTime() || 0;
-		                const d2 = new Date(a.Date).getTime() || 0;
-		                return d1 - d2;
-		            });
-		
-		        if (!blogContainer) return;
-		
-		        if (posts.length === 0) {
-		            blogContainer.innerHTML = `
-		                <div class="no-blogs" style="grid-column: 1/-1; text-align: center; padding: 3rem; color: #718096;">
-		                    <i class="fas fa-newspaper" style="font-size: 3rem; margin-bottom: 1rem; color: #16a34a;"></i>
-		                    <p style="font-size: 1.1rem;">No blog posts yet. Be the first to share!</p>
-		                </div>
-		            `;
-		            return;
-		        }
-		
-		        blogContainer.innerHTML = posts.map((post, index) => `
-		            <div class="blog-card" style="animation-delay: ${index * 0.1}s">
-		                <img 
-		                    src="${post.Image || 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=600'}" 
-		                    alt="${post.Title}" 
-		                    loading="lazy"
-		                />
-		
-		                <div class="blog-content">
-		                    <h3>${post.Title}</h3>
-		
-		                    <p>
-		                        ${post.Content.slice(0, 200)}
-		                        ${post.Content.length > 200 ? '...' : ''}
-		                    </p>
-		
-		                    <div class="meta">
-		                        ${post.Date || 'No date'} • ${post.Name}
-		                    </div>
-		                </div>
-		            </div>
-		        `).join('');
-		
-		        // Attach events AFTER rendering
-		        document.querySelectorAll('.read-more-btn').forEach(btn => {
-		            btn.addEventListener('click', () => {
-		                const post = posts.find(p => p.ID === btn.dataset.id);
-		                if (post) openReadModal(post);
-		            });
-		        });
-		
-		    } catch (error) {
-		        console.error('Error loading blogs:', error);
-		
-		        if (blogContainer) {
-		            blogContainer.innerHTML = `
-		                <div class="no-blogs" style="grid-column: 1/-1; text-align: center; padding: 3rem; color: #718096;">
-		                    <i class="fas fa-exclamation-circle" style="font-size: 3rem; margin-bottom: 1rem; color: #ef4444;"></i>
-		                    <p style="font-size: 1.1rem;">Unable to load blogs. Please try again later.</p>
-		                </div>
-		            `;
-		        }
-		    }
-		}
+    // Open Read More Modal
+    function openReadModal(post) {
+        const readImage = document.getElementById('readImage');
+        const readTitle = document.getElementById('readTitle');
+        const readDate = document.getElementById('readDate');
+        const readAuthor = document.getElementById('readAuthor');
+        const readContent = document.getElementById('readContent');
+
+        readTitle.textContent = post.Title;
+        readDate.textContent = formatDate(post.Date);
+        readAuthor.textContent = post.Name;
+        readContent.textContent = post.Content;
+
+        if (post.Image) {
+            readImage.src = post.Image;
+            readImage.style.display = 'block';
+        } else {
+            readImage.src = 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800';
+            readImage.style.display = 'block';
+        }
+
+        readModal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    }
+
+    // Format date helper
+    function formatDate(dateStr) {
+        if (!dateStr) return 'No date';
+        const date = new Date(dateStr);
+        if (isNaN(date.getTime())) return dateStr;
+        return date.toLocaleDateString('en-US', { 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric' 
+        });
+    }
+
+    // Load blogs from API
+    async function loadBlogs() {
+        try {
+            const res = await fetch(API_URL);
+            const data = await res.json();
+
+            if (!Array.isArray(data)) throw new Error("Invalid API response");
+
+            const posts = data
+                .map(p => ({
+                    ID: p.ID || p.id,
+                    Title: p.Title || p.title || "Untitled",
+                    Content: p.Content || p.content || "",
+                    Date: p.Date || p.date || "",
+                    Name: p.Name || p.name || "Anonymous",
+                    Image: p.Image || p.image || "",
+                    Status: (p.Status || p.status || "").toLowerCase()
+                }))
+                .filter(p => p.Status === 'published')
+                .sort((a, b) => {
+                    const d1 = new Date(b.Date).getTime() || 0;
+                    const d2 = new Date(a.Date).getTime() || 0;
+                    return d1 - d2;
+                });
+
+            // Store globally
+            BLOGS = posts;
+
+            if (!blogContainer) return;
+
+            if (posts.length === 0) {
+                blogContainer.innerHTML = `
+                    <div class="no-blogs" style="grid-column: 1/-1; text-align: center; padding: 3rem; color: #718096;">
+                        <i class="fas fa-newspaper" style="font-size: 3rem; margin-bottom: 1rem; color: #16a34a;"></i>
+                        <p style="font-size: 1.1rem;">No blog posts yet. Be the first to share!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            blogContainer.innerHTML = posts.map((post, index) => `
+                <div class="blog-card" style="animation-delay: ${index * 0.1}s">
+                    <div class="blog-card-image">
+                        <img 
+                            src="${post.Image || 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=600'}" 
+                            alt="${post.Title}" 
+                            loading="lazy"
+                        />
+                        <div class="blog-card-date">
+                            <i class="fas fa-calendar-alt"></i>
+                            ${formatDate(post.Date)}
+                        </div>
+                    </div>
+
+                    <div class="blog-content">
+                        <h3>${post.Title}</h3>
+
+                        <p>
+                            ${post.Content.slice(0, 150)}${post.Content.length > 150 ? '...' : ''}
+                        </p>
+
+                        <div class="blog-meta">
+                            <span class="blog-author">
+                                <i class="fas fa-user"></i>
+                                ${post.Name}
+                            </span>
+                        </div>
+
+                        <button class="read-more-btn" data-id="${post.ID}">
+                            Read More <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+
+            // Attach click events to Read More buttons
+            document.querySelectorAll('.read-more-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const post = BLOGS.find(p => p.ID === btn.dataset.id);
+                    if (post) openReadModal(post);
+                });
+            });
+
+        } catch (error) {
+            console.error('Error loading blogs:', error);
+
+            if (blogContainer) {
+                blogContainer.innerHTML = `
+                    <div class="no-blogs" style="grid-column: 1/-1; text-align: center; padding: 3rem; color: #718096;">
+                        <i class="fas fa-exclamation-circle" style="font-size: 3rem; margin-bottom: 1rem; color: #ef4444;"></i>
+                        <p style="font-size: 1.1rem;">Unable to load blogs. Please try again later.</p>
+                    </div>
+                `;
+            }
+        }
+    }
 
     // Submit blog form
+    if (blogForm) {
+        const msg = document.getElementById('msg');
+        const submitBtn = blogForm.querySelector('.submit-btn');
 
-if (blogForm) {
-  const msg = document.getElementById('msg');
-  const submitBtn = blogForm.querySelector('.submit-btn');
+        let isSubmitting = false;
 
-  let isSubmitting = false;
+        blogForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            if (isSubmitting) return;
 
-  blogForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    if (isSubmitting) return;
+            isSubmitting = true;
 
-    isSubmitting = true;
+            const formData = new FormData(e.target);
+            const originalText = submitBtn.innerHTML;
 
-    const formData = new FormData(e.target);
-    const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Publishing...';
+            submitBtn.disabled = true;
 
-    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Publishing...';
-    submitBtn.disabled = true;
+            const payload = {
+                data: [{
+                    ID: 'blog-' + Date.now(),
+                    Title: (formData.get('Title') || '').toString().trim(),
+                    Content: (formData.get('Content') || '').toString().trim(),
+                    Date: formData.get('Date') || new Date().toISOString().split('T')[0],
+                    Name: (formData.get('Name') || '').toString().trim(),
+                    Image: (formData.get('Image') || '').toString().trim(),
+                    Status: formData.get('Status') || 'published'
+                }]
+            };
 
-    const payload = {
-      data: [{
-        ID: 'blog-' + Date.now(),
-        Title: (formData.get('Title') || '').toString().trim(),
-        Content: (formData.get('Content') || '').toString().trim(),
-        Date: formData.get('Date') || new Date().toISOString().split('T')[0],
-        Name: (formData.get('Name') || '').toString().trim(),
-        Image: (formData.get('Image') || '').toString().trim(),
-        Status: formData.get('Status') || 'published'
-      }]
-    };
+            try {
+                const res = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
 
-    try {
-      const res = await fetch(API_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      });
+                if (!res.ok) {
+                    throw new Error(`HTTP ${res.status}`);
+                }
 
-      if (!res.ok) {
-        throw new Error(`HTTP ${res.status}`);
-      }
+                msg.textContent = '✓ Posted successfully!';
+                msg.style.color = '#16a34a';
 
-      msg.textContent = '✓ Posted successfully!';
-      msg.style.color = '#16a34a';
+                blogForm.reset();
 
-      blogForm.reset();
+                setTimeout(() => {
+                    modal.style.display = 'none';
+                    document.body.style.overflow = '';
+                    msg.textContent = '';
+                    loadBlogs();
+                }, 1200);
 
-      setTimeout(() => {
-        modal.style.display = 'none';
-        document.body.style.overflow = '';
-        msg.textContent = '';
-        loadBlogs();
-      }, 1200);
+            } catch (error) {
+                console.error('Error posting blog:', error);
 
-    } catch (error) {
-      console.error('Error posting blog:', error);
+                msg.textContent = '✗ Error posting. Please try again.';
+                msg.style.color = '#ef4444';
 
-      msg.textContent = '✗ Error posting. Please try again.';
-      msg.style.color = '#ef4444';
-
-    } finally {
-      submitBtn.innerHTML = originalText;
-      submitBtn.disabled = false;
-      isSubmitting = false;
+            } finally {
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+                isSubmitting = false;
+            }
+        });
     }
-  });
-}
 
-// Initial load
-loadBlogs();
+    // Initial load
+    loadBlogs();
+
     // ========================================
     // SMOOTH SCROLL FOR ANCHOR LINKS
     // ========================================
@@ -2984,33 +3258,6 @@ loadBlogs();
         });
     });
 
-document.addEventListener("click", (e) => {
-  if (e.target.classList.contains("read-more-btn")) {
-    const id = e.target.dataset.id;
-    const post = BLOGS.find(p => p.ID === id);
-    if (!post) return;
-
-    document.getElementById("readTitle").textContent = post.Title;
-    document.getElementById("readContent").textContent = post.Content;
-    document.getElementById("readMeta").textContent = `${post.Date} • ${post.Name}`;
-
-    const img = document.getElementById("readImage");
-    if (post.Image) {
-      img.src = post.Image;
-      img.style.display = "block";
-    } else {
-      img.style.display = "none";
-    }
-
-    readModal.classList.remove("hidden");
-  }
-});
-
-// close button
-document.getElementById("closeReadModal")?.addEventListener("click", () => {
-    readModal.classList.add("hidden");
-});
-	
     // ========================================
     // CARD HOVER TILT EFFECT
     // ========================================
@@ -3037,7 +3284,7 @@ document.getElementById("closeReadModal")?.addEventListener("click", () => {
     // ========================================
     // RIPPLE EFFECT ON BUTTONS
     // ========================================
-    const buttons = document.querySelectorAll('.cta-button, .donate-btn, .submit-btn, .download-btn');
+    const buttons = document.querySelectorAll('.cta-button, .donate-btn, .submit-btn, .download-btn, .read-more-btn');
     
     buttons.forEach(button => {
         button.addEventListener('click', function(e) {
@@ -3078,10 +3325,8 @@ document.getElementById("closeReadModal")?.addEventListener("click", () => {
     document.head.appendChild(style);
 
 });
-
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
-    <script src="script.js"></script>
 </body>
 </html>
