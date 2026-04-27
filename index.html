@@ -2440,17 +2440,6 @@ footer {
                     <p id="msg" class="form-message"></p>
                 </div>
             </div>
-			<div id="readModal" class="modal hidden">
-				  <div class="modal-content">
-				    <span id="closeRead" class="close">&times;</span>
-				
-				    <h2 id="readTitle"></h2>
-				    <p id="readMeta"></p>
-				    <img id="readImage">
-				    <p id="readContent"></p>
-				  </div>
-				</div>
-        </div>
     </section>
 
     <!-- Contact Section -->
@@ -2869,16 +2858,9 @@ document.addEventListener('DOMContentLoaded', () => {
 		                    <h3>${post.Title}</h3>
 		
 		                    <p>
-		                        ${post.Content.slice(0, 120)}
-		                        ${post.Content.length > 120 ? '...' : ''}
+		                        ${post.Content.slice(0, 200)}
+		                        ${post.Content.length > 200 ? '...' : ''}
 		                    </p>
-		
-		                    <button 
-		                        class="read-more-btn" 
-		                        data-id="${post.ID}"
-		                    >
-		                        Read More →
-		                    </button>
 		
 		                    <div class="meta">
 		                        ${post.Date || 'No date'} • ${post.Name}
