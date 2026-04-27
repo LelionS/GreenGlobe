@@ -2852,65 +2852,76 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Submit blog form
-    if (blogForm) {
-        blogForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
 
-            const formData = new FormData(e.target);
-            const submitBtn = blogForm.querySelector('.submit-btn');
-            const originalText = submitBtn.innerHTML;
-            
-            // Show loading state
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Publishing...';
-            submitBtn.disabled = true;
+if (blogForm) {
+  const msg = document.getElementById('msg');
+  const submitBtn = blogForm.querySelector('.submit-btn');
 
-            const payload = {
-                data: [{
-                    ID: 'blog-' + Date.now(),
-                    Title: formData.get('Title'),
-                    Content: formData.get('Content'),
-                    Date: formData.get('Date'),
-                    Name: formData.get('Name'),
-                    Image: formData.get('Image'),
-                    Status: formData.get('Status')
-                }]
-            };
+  let isSubmitting = false;
 
-            try {
-                await fetch(API_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
+  blogForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (isSubmitting) return;
 
-                const msg = document.getElementById('msg');
-                msg.textContent = '✓ Posted successfully!';
-                msg.style.color = '#16a34a';
+    isSubmitting = true;
 
-                e.target.reset();
-                
-                setTimeout(() => {
-                    modal.style.display = 'none';
-                    document.body.style.overflow = '';
-                    msg.textContent = '';
-                    loadBlogs();
-                }, 1500);
+    const formData = new FormData(e.target);
+    const originalText = submitBtn.innerHTML;
 
-            } catch (error) {
-                console.error('Error posting blog:', error);
-                const msg = document.getElementById('msg');
-                msg.textContent = '✗ Error posting. Please try again.';
-                msg.style.color = '#ef4444';
-            } finally {
-                submitBtn.innerHTML = originalText;
-                submitBtn.disabled = false;
-            }
-        });
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Publishing...';
+    submitBtn.disabled = true;
+
+    const payload = {
+      data: [{
+        ID: 'blog-' + Date.now(),
+        Title: (formData.get('Title') || '').toString().trim(),
+        Content: (formData.get('Content') || '').toString().trim(),
+        Date: formData.get('Date') || new Date().toISOString().split('T')[0],
+        Name: (formData.get('Name') || '').toString().trim(),
+        Image: (formData.get('Image') || '').toString().trim(),
+        Status: formData.get('Status') || 'published'
+      }]
+    };
+
+    try {
+      const res = await fetch(API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      if (!res.ok) {
+        throw new Error(`HTTP ${res.status}`);
+      }
+
+      msg.textContent = '✓ Posted successfully!';
+      msg.style.color = '#16a34a';
+
+      blogForm.reset();
+
+      setTimeout(() => {
+        modal.style.display = 'none';
+        document.body.style.overflow = '';
+        msg.textContent = '';
+        loadBlogs();
+      }, 1200);
+
+    } catch (error) {
+      console.error('Error posting blog:', error);
+
+      msg.textContent = '✗ Error posting. Please try again.';
+      msg.style.color = '#ef4444';
+
+    } finally {
+      submitBtn.innerHTML = originalText;
+      submitBtn.disabled = false;
+      isSubmitting = false;
     }
+  });
+}
 
-    // Initial load
-    loadBlogs();
-
+// Initial load
+loadBlogs();
     // ========================================
     // SMOOTH SCROLL FOR ANCHOR LINKS
     // ========================================
