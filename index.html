@@ -2525,6 +2525,19 @@ footer {
             </footer>
         </div>
     </section>
+	
+	<div id="readModal" class="modal hidden">
+  <div class="modal-content">
+    <span id="closeReadModal" class="close">&times;</span>
+
+    <h2 id="readTitle"></h2>
+    <p id="readMeta"></p>
+
+    <img id="readImage" style="width:100%; display:none;" />
+
+    <p id="readContent"></p>
+  </div>
+</div>
 
     <!-- Scroll to Top Button -->
     <button id="scroll-to-top" aria-label="Scroll to top">
@@ -2991,13 +3004,25 @@ loadBlogs();
         });
     });
 
+const readModal = document.getElementById("readModal");
 
-	function openReadModal(post) {
-    document.getElementById("readTitle").textContent = post.Title;
-    document.getElementById("readContent").textContent = post.Content;
-    document.getElementById("readMeta").textContent = `${post.Date} • ${post.Name}`;
+function openReadModal(post) {
+    if (!readModal) return;
 
+    const title = document.getElementById("readTitle");
+    const content = document.getElementById("readContent");
+    const meta = document.getElementById("readMeta");
     const img = document.getElementById("readImage");
+
+    if (!title || !content || !meta || !img) {
+        console.error("Modal elements missing");
+        return;
+    }
+
+    title.textContent = post.Title;
+    content.textContent = post.Content;
+    meta.textContent = `${post.Date || 'No date'} • ${post.Name}`;
+
     if (post.Image) {
         img.src = post.Image;
         img.style.display = "block";
@@ -3005,8 +3030,14 @@ loadBlogs();
         img.style.display = "none";
     }
 
-    document.getElementById("readModal").classList.remove("hidden");
+    readModal.classList.remove("hidden");
 }
+
+// close button
+document.getElementById("closeReadModal")?.addEventListener("click", () => {
+    readModal.classList.add("hidden");
+});
+	
     // ========================================
     // CARD HOVER TILT EFFECT
     // ========================================
