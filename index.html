@@ -2440,6 +2440,16 @@ footer {
                     <p id="msg" class="form-message"></p>
                 </div>
             </div>
+			<div id="readModal" class="modal hidden">
+				  <div class="modal-content">
+				    <span id="closeRead" class="close">&times;</span>
+				
+				    <h2 id="readTitle"></h2>
+				    <p id="readMeta"></p>
+				    <img id="readImage">
+				    <p id="readContent"></p>
+				  </div>
+				</div>
         </div>
     </section>
 
@@ -2525,18 +2535,6 @@ footer {
             </footer>
         </div>
     </section>
-	
-	<div id="readModal" class="modal hidden">
-  <div class="modal-content">
-    <span id="closeReadModal" class="close">&times;</span>
-
-    <h2 id="readTitle"></h2>
-    <p id="readMeta"></p>
-
-    <img id="readImage" style="width:100%; display:none;" />
-
-    <p id="readContent"></p>
-  </div>
 </div>
 
     <!-- Scroll to Top Button -->
@@ -3004,34 +3002,27 @@ loadBlogs();
         });
     });
 
-const readModal = document.getElementById("readModal");
+document.addEventListener("click", (e) => {
+  if (e.target.classList.contains("read-more-btn")) {
+    const id = e.target.dataset.id;
+    const post = BLOGS.find(p => p.ID === id);
+    if (!post) return;
 
-function openReadModal(post) {
-    if (!readModal) return;
+    document.getElementById("readTitle").textContent = post.Title;
+    document.getElementById("readContent").textContent = post.Content;
+    document.getElementById("readMeta").textContent = `${post.Date} • ${post.Name}`;
 
-    const title = document.getElementById("readTitle");
-    const content = document.getElementById("readContent");
-    const meta = document.getElementById("readMeta");
     const img = document.getElementById("readImage");
-
-    if (!title || !content || !meta || !img) {
-        console.error("Modal elements missing");
-        return;
-    }
-
-    title.textContent = post.Title;
-    content.textContent = post.Content;
-    meta.textContent = `${post.Date || 'No date'} • ${post.Name}`;
-
     if (post.Image) {
-        img.src = post.Image;
-        img.style.display = "block";
+      img.src = post.Image;
+      img.style.display = "block";
     } else {
-        img.style.display = "none";
+      img.style.display = "none";
     }
 
     readModal.classList.remove("hidden");
-}
+  }
+});
 
 // close button
 document.getElementById("closeReadModal")?.addEventListener("click", () => {
