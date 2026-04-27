@@ -2809,47 +2809,94 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Load blogs from API
-    async function loadBlogs() {
-        try {
-            const res = await fetch(API_URL);
-            const data = await res.json();
 
-            const posts = data
-                .filter(p => p.Status?.toLowerCase() === 'published')
-                .sort((a, b) => new Date(b.Date) - new Date(a.Date));
+async function loadBlogs() {
+    try {
+        const res = await fetch(API_URL);
+        const data = await res.json();
 
-            if (blogContainer) {
-                if (posts.length === 0) {
-                    blogContainer.innerHTML = `
-                        <div class="no-blogs" style="grid-column: 1/-1; text-align: center; padding: 3rem; color: #718096;">
-                            <i class="fas fa-newspaper" style="font-size: 3rem; margin-bottom: 1rem; color: #16a34a;"></i>
-                            <p style="font-size: 1.1rem;">No blog posts yet. Be the first to share!</p>
-                        </div>
-                    `;
-                } else {
-                    blogContainer.innerHTML = posts.map((post, index) => `
-                        <div class="blog-card" style="animation-delay: ${index * 0.1}s">
-                            <img src="${post.Image || 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=600'}" alt="${post.Title || 'Blog post'}" loading="lazy" />
-                            <div class="blog-content">
-                                <h3>${post.Title || 'Untitled'}</h3>
-                                <p>${(post.Content || '').slice(0, 120)}${post.Content && post.Content.length > 120 ? '...' : ''}</p>
-                            </div>
-                        </div>
-                    `).join('');
-                }
-            }
-        } catch (error) {
-            console.error('Error loading blogs:', error);
-            if (blogContainer) {
-                blogContainer.innerHTML = `
-                    <div class="no-blogs" style="grid-column: 1/-1; text-align: center; padding: 3rem; color: #718096;">
-                        <i class="fas fa-exclamation-circle" style="font-size: 3rem; margin-bottom: 1rem; color: #ef4444;"></i>
-                        <p style="font-size: 1.1rem;">Unable to load blogs. Please try again later.</p>
+        if (!Array.isArray(data)) throw new Error("Invalid API response");
+
+        const posts = data
+            .map(p => ({
+                ID: p.ID || p.id,
+                Title: p.Title || p.title || "Untitled",
+                Content: p.Content || p.content || "",
+                Date: p.Date || p.date || "",
+                Name: p.Name || p.name || "Anonymous",
+                Image: p.Image || p.image || "",
+                Status: (p.Status || p.status || "").toLowerCase()
+            }))
+            .filter(p => p.Status === 'published')
+            .sort((a, b) => {
+                const d1 = new Date(b.Date).getTime() || 0;
+                const d2 = new Date(a.Date).getTime() || 0;
+                return d1 - d2;
+            });
+
+        if (!blogContainer) return;
+
+        if (posts.length === 0) {
+            blogContainer.innerHTML = `
+                <div class="no-blogs" style="grid-column: 1/-1; text-align: center; padding: 3rem; color: #718096;">
+                    <i class="fas fa-newspaper" style="font-size: 3rem; margin-bottom: 1rem; color: #16a34a;"></i>
+                    <p style="font-size: 1.1rem;">No blog posts yet. Be the first to share!</p>
+                </div>
+            `;
+            return;
+        }
+
+        blogContainer.innerHTML = posts.map((post, index) => `
+            <div class="blog-card" style="animation-delay: ${index * 0.1}s">
+                <img 
+                    src="${post.Image || 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=600'}" 
+                    alt="${post.Title}" 
+                    loading="lazy"
+                />
+
+                <div class="blog-content">
+                    <h3>${post.Title}</h3>
+
+                    <p>
+                        ${post.Content.slice(0, 120)}
+                        ${post.Content.length > 120 ? '...' : ''}
+                    </p>
+
+                    <button 
+                        class="read-more-btn" 
+                        data-id="${post.ID}"
+                    >
+                        Read More →
+                    </button>
+
+                    <div class="meta">
+                        ${post.Date || 'No date'} • ${post.Name}
                     </div>
-                `;
-            }
+                </div>
+            </div>
+        `).join('');
+
+        // Attach events AFTER rendering
+        document.querySelectorAll('.read-more-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const post = posts.find(p => p.ID === btn.dataset.id);
+                if (post) openReadModal(post);
+            });
+        });
+
+    } catch (error) {
+        console.error('Error loading blogs:', error);
+
+        if (blogContainer) {
+            blogContainer.innerHTML = `
+                <div class="no-blogs" style="grid-column: 1/-1; text-align: center; padding: 3rem; color: #718096;">
+                    <i class="fas fa-exclamation-circle" style="font-size: 3rem; margin-bottom: 1rem; color: #ef4444;"></i>
+                    <p style="font-size: 1.1rem;">Unable to load blogs. Please try again later.</p>
+                </div>
+            `;
         }
     }
+}
 
     // Submit blog form
 
