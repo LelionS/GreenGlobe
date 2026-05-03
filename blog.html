@@ -1,107 +1,285 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Blog Admin</title>
-  <style>
-    body { font-family: Arial; background:#f5f5f5; padding:20px; }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Blog Admin Panel</title>
 
-    .container { max-width:900px; margin:auto; }
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-    form, .blog-card {
-      background:#fff;
-      padding:15px;
-      margin-bottom:15px;
-      border-radius:10px;
-    }
+<style>
+:root{
+  --green:#065f46;
+  --green2:#16a34a;
+  --bg:#0b1220;
+  --card:#0f172a;
+  --muted:#94a3b8;
+  --text:#e2e8f0;
+  --danger:#ef4444;
+  --warn:#f59e0b;
+}
 
-    input, textarea, select {
-      width:100%;
-      margin:5px 0;
-      padding:10px;
-    }
+*{box-sizing:border-box}
 
-    button {
-      padding:10px;
-      margin-top:10px;
-      cursor:pointer;
-    }
+body{
+  margin:0;
+  font-family:system-ui, sans-serif;
+  background:linear-gradient(135deg,#050a14,#0b1220);
+  color:var(--text);
+}
 
-    .actions {
-      display:flex;
-      gap:10px;
-      margin-top:10px;
-    }
+.container{
+  max-width:1100px;
+  margin:auto;
+  padding:30px 20px;
+}
 
-    .edit { background:#f59e0b; color:#fff; }
-    .delete { background:#ef4444; color:#fff; }
-    .save { background:#16a34a; color:#fff; }
-  </style>
+.header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:20px;
+}
+
+.header h1{
+  font-size:22px;
+  margin:0;
+}
+
+.badge{
+  background:rgba(22,163,74,0.15);
+  color:#22c55e;
+  padding:6px 10px;
+  border-radius:999px;
+  font-size:12px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns: 360px 1fr;
+  gap:20px;
+}
+
+.card{
+  background:rgba(15,23,42,0.85);
+  backdrop-filter: blur(10px);
+  border:1px solid rgba(148,163,184,0.15);
+  border-radius:14px;
+  padding:15px;
+}
+
+input, textarea, select{
+  width:100%;
+  padding:10px;
+  margin-top:6px;
+  margin-bottom:12px;
+  border-radius:10px;
+  border:1px solid rgba(148,163,184,0.2);
+  background:#0b1220;
+  color:var(--text);
+  outline:none;
+}
+
+textarea{min-height:120px; resize:vertical}
+
+label{
+  font-size:12px;
+  color:var(--muted);
+}
+
+button{
+  width:100%;
+  padding:10px;
+  border:none;
+  border-radius:10px;
+  cursor:pointer;
+  font-weight:600;
+  transition:0.2s;
+}
+
+.primary{
+  background:linear-gradient(135deg,var(--green),var(--green2));
+  color:white;
+}
+
+.primary:hover{opacity:0.9}
+
+.list{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+.blog{
+  padding:14px;
+  border-radius:12px;
+  background:#0b1220;
+  border:1px solid rgba(148,163,184,0.15);
+}
+
+.blog h3{
+  margin:0 0 5px 0;
+  font-size:15px;
+}
+
+.blog p{
+  margin:0;
+  color:var(--muted);
+  font-size:13px;
+}
+
+.meta{
+  margin-top:8px;
+  font-size:11px;
+  color:#64748b;
+  display:flex;
+  justify-content:space-between;
+}
+
+.actions{
+  display:flex;
+  gap:8px;
+  margin-top:10px;
+}
+
+.actions button{
+  width:100%;
+  padding:8px;
+  font-size:12px;
+}
+
+.edit{
+  background:var(--warn);
+  color:#000;
+}
+
+.delete{
+  background:var(--danger);
+  color:white;
+}
+
+.empty{
+  text-align:center;
+  color:var(--muted);
+  padding:30px;
+}
+
+/* responsive */
+@media(max-width:900px){
+  .grid{grid-template-columns:1fr}
+}
+</style>
 </head>
 
 <body>
+
 <div class="container">
 
-  <h2>Blog Admin Panel</h2>
+  <div class="header">
+    <h1><i class="fas fa-feather"></i> Blog Admin</h1>
+    <span class="badge">SheetDB Powered</span>
+  </div>
 
-  <!-- FORM -->
-  <form id="blogForm">
-    <input type="hidden" name="ID" id="blogId">
+  <div class="grid">
 
-    <input type="text" name="Title" id="title" placeholder="Title" required>
-    <textarea name="Content" id="content" placeholder="Content" required></textarea>
-    <input type="date" name="Date" id="date" required>
-    <input type="text" name="Name" id="name" placeholder="Author" required>
-    <input type="text" name="Image" id="image" placeholder="Image URL">
-    
-    <select name="Status" id="status">
-      <option value="published">Published</option>
-      <option value="draft">Draft</option>
-    </select>
+    <!-- FORM -->
+    <div class="card">
+      <h3>Create / Edit Blog</h3>
 
-    <button type="submit" id="submitBtn">Save Blog</button>
-  </form>
+      <form id="blogForm">
+        <input type="hidden" id="blogId">
 
-  <h3>All Blogs</h3>
-  <div id="blogList"></div>
+        <label>Title</label>
+        <input id="title" required>
 
+        <label>Content</label>
+        <textarea id="content" required></textarea>
+
+        <label>Date</label>
+        <input type="date" id="date" required>
+
+        <label>Author</label>
+        <input id="name" required>
+
+        <label>Image URL</label>
+        <input id="image">
+
+        <label>Status</label>
+        <select id="status">
+          <option value="published">Published</option>
+          <option value="draft">Draft</option>
+        </select>
+
+        <button class="primary" type="submit" id="btn">
+          <i class="fas fa-save"></i> Save Blog
+        </button>
+      </form>
+    </div>
+
+    <!-- LIST -->
+    <div class="card">
+      <h3>All Blogs</h3>
+      <div id="list" class="list"></div>
+    </div>
+
+  </div>
 </div>
 
 <script>
 const API = "https://sheetdb.io/api/v1/elufdc7107qdy";
 
+let editing = null;
+
+const list = document.getElementById("list");
 const form = document.getElementById("blogForm");
-const list = document.getElementById("blogList");
-const btn = document.getElementById("submitBtn");
+const btn = document.getElementById("btn");
 
-let editingId = null;
+const title = document.getElementById("title");
+const content = document.getElementById("content");
+const date = document.getElementById("date");
+const name = document.getElementById("name");
+const image = document.getElementById("image");
+const status = document.getElementById("status");
 
-// LOAD BLOGS
-async function loadBlogs() {
+// LOAD
+async function load(){
   const res = await fetch(API);
   const data = await res.json();
 
-  list.innerHTML = data.map(blog => `
-    <div class="blog-card">
-      <h3>${blog.Title}</h3>
-      <p>${blog.Content.substring(0,120)}...</p>
-      <small>${blog.Date} - ${blog.Name}</small>
+  if(!data.length){
+    list.innerHTML = `<div class="empty">No blogs yet</div>`;
+    return;
+  }
+
+  list.innerHTML = data.map(b=>`
+    <div class="blog">
+      <h3>${b.Title}</h3>
+      <p>${(b.Content||"").slice(0,100)}...</p>
+
+      <div class="meta">
+        <span>${b.Name}</span>
+        <span>${b.Date}</span>
+      </div>
 
       <div class="actions">
-        <button class="edit" onclick='editBlog(${JSON.stringify(blog)})'>Edit</button>
-        <button class="delete" onclick="deleteBlog('${blog.ID}')">Delete</button>
+        <button class="edit" onclick='editBlog(${JSON.stringify(b)})'>
+          Edit
+        </button>
+        <button class="delete" onclick="del('${b.ID}')">
+          Delete
+        </button>
       </div>
     </div>
   `).join("");
 }
 
-// CREATE OR UPDATE
-form.addEventListener("submit", async (e) => {
+// CREATE / UPDATE
+form.onsubmit = async (e)=>{
   e.preventDefault();
 
-  const data = {
-    data: [{
-      ID: editingId || "blog-" + Date.now(),
+  const payload = {
+    data:[{
+      ID: editing || "blog-" + Date.now(),
       Title: title.value,
       Content: content.value,
       Date: date.value,
@@ -111,57 +289,51 @@ form.addEventListener("submit", async (e) => {
     }]
   };
 
-  if (editingId) {
-    // UPDATE
-    await fetch(`${API}/ID/${editingId}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data)
+  if(editing){
+    await fetch(`${API}/ID/${editing}`,{
+      method:"PUT",
+      headers:{ "Content-Type":"application/json" },
+      body: JSON.stringify(payload)
     });
-
-    editingId = null;
-    btn.textContent = "Save Blog";
+    editing = null;
+    btn.innerHTML = "Save Blog";
   } else {
-    // CREATE
-    await fetch(API, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data)
+    await fetch(API,{
+      method:"POST",
+      headers:{ "Content-Type":"application/json" },
+      body: JSON.stringify(payload)
     });
   }
 
   form.reset();
-  loadBlogs();
-});
+  load();
+};
 
 // EDIT
-function editBlog(blog) {
-  editingId = blog.ID;
+window.editBlog = (b)=>{
+  editing = b.ID;
+  title.value = b.Title;
+  content.value = b.Content;
+  date.value = b.Date;
+  name.value = b.Name;
+  image.value = b.Image;
+  status.value = b.Status;
 
-  blogId.value = blog.ID;
-  title.value = blog.Title;
-  content.value = blog.Content;
-  date.value = blog.Date;
-  name.value = blog.Name;
-  image.value = blog.Image;
-  status.value = blog.Status;
-
-  btn.textContent = "Update Blog";
-}
+  btn.innerHTML = "Update Blog";
+};
 
 // DELETE
-async function deleteBlog(id) {
-  if (!confirm("Delete this blog?")) return;
+window.del = async (id)=>{
+  if(!confirm("Delete blog?")) return;
 
-  await fetch(`${API}/ID/${id}`, {
-    method: "DELETE"
+  await fetch(`${API}/ID/${id}`,{
+    method:"DELETE"
   });
 
-  loadBlogs();
-}
+  load();
+};
 
-// INIT
-loadBlogs();
+load();
 </script>
 
 </body>
